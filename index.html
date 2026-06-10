@@ -106,7 +106,7 @@
             document.getElementById('year-title').innerText = `${currentYear} 年已過去`;
             document.getElementById('percentage-text').innerText = progressPercentage.toFixed(8) + '%';
             document.getElementById('progress-bar').style.width = progressPercentage + '%';
-            document.getElementById('now-time').innerText = `現在時間 ${formattedDateTime}`;
+            document.getElementById('datetime-display').textContent = formattedDateTime;
         }
 
         // 網頁載入時先執行一次，避免 0.25 秒的空白延遲
