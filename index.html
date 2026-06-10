@@ -115,7 +115,7 @@
             document.getElementById('clock').innerText = formattedTime;
             
             // 保留 7 位小數讓 0.25 秒的動態跳動更明顯
-            document.getElementById('percentage').innerText = percentage.toFixed(9) + '%';
+            document.getElementById('percentage').innerText = percentage.toFixed(15) + '%';
             
             // 更新進度條長度
             document.getElementById('progress-fill').style.width = percentage + '%';
@@ -124,8 +124,8 @@
         // 初始化先執行一次避免畫面空白
         updateYearProgress();
 
-        // 每 75 毫秒（0.75 秒）定時更新一次
-        setInterval(updateYearProgress, 75);
+        // 每 50 毫秒（0.5 秒）定時更新一次
+        setInterval(updateYearProgress, 50);
     </script>
 </body>
 </html>
