@@ -100,12 +100,16 @@
             // 3. 計算百分比
             const progressPercentage = (elapsedMsInYear / totalMsInYear) * 100;
 
+            // 3-1. 轉換日期格式
+            <div id="datetime-display"></div>
+
+
             // 4. 更新畫面內容
             // 因為每 0.25 秒更新一次，顯示到小數點後 8 位可以完美展現毫秒級的動態跳動
             document.getElementById('year-title').innerText = `${currentYear} 年已過去`;
             document.getElementById('percentage-text').innerText = progressPercentage.toFixed(8) + '%';
             document.getElementById('progress-bar').style.width = progressPercentage + '%';
-            document.getElementById('now-time').innerText = `現在時間 ${currentTime}`;
+            document.getElementById('now-time').innerText = `現在時間 ${datetime-display}`;
         }
 
         // 網頁載入時先執行一次，避免 0.25 秒的空白延遲
