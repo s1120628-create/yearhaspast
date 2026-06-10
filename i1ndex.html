@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今年進度追蹤器</title>
+    <style>
+        /* 全域樣式與極簡深色主題 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #1e1e1e;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #bb86fc;
+            letter-spacing: 1px;
+        }
+
+        /* 時間顯示樣式 (YYYY:MM:DD hh:mm:ss) */
+        .time-display {
+            font-size: 1.6rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #03dac6;
+        }
+
+        /* 百分比顯示樣式 */
+        .percentage-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #cf6679;
+        }
+
+        /* 外層進度條軌道 */
+        .progress-bar-container {
+            background-color: #333333;
+            border-radius: 10px;
+            width: 100%;
+            height: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        /* 內層進度條填充 */
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #bb86fc, #03dac6);
+            height: 100%;
+            width: 0%;
+            transition: width 0.25s linear;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="year-title">今年已過去</h1>
+        <div class="percentage-display" id="percentage">0.0000000%</div>
+        
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        
+        <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+        
+        <div class="time-display" id="clock">YYYY:MM:DD hh:mm:ss</div>
+    </div>
+
+    <script>
+        function updateYearProgress() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+
+            // 1. 計算時間與百分比 (以毫秒為單位)
+            const startOfYear = new Date(currentYear, 0, 1, 0, 0, 0, 0); // 今年 1/1 00:00:00.000
+            const endOfYear = new Date(currentYear + 1, 0, 1, 0, 0, 0, 0); // 明年 1/1 00:00:00.000
+            
+            const totalMsInYear = endOfYear - startOfYear;
+            const passedMsInYear = now - startOfYear;
+            
+            const percentage = (passedMsInYear / totalMsInYear) * 100;
+
+            // 2. 格式化時間為 YYYY:MM:DD hh:mm:ss
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            const formattedTime = `${year}:${month}:${day} ${hours}:${minutes}:${seconds}`;
+
+            // 3. 更新網頁內容
+            document.getElementById('year-title').innerText = `${year} 年已過去`;
+            document.getElementById('clock').innerText = formattedTime;
+            
+            // 保留 7 位小數讓 0.25 秒的動態跳動更明顯
+            document.getElementById('percentage').innerText = percentage.toFixed(7) + '%';
+            
+            // 更新進度條長度
+            document.getElementById('progress-fill').style.width = percentage + '%';
+        }
+
+        // 初始化先執行一次避免畫面空白
+        updateYearProgress();
+
+        // 每 250 毫秒（0.25 秒）定時更新一次
+        setInterval(updateYearProgress, 250);
+    </script>
+</body>
+</html>
