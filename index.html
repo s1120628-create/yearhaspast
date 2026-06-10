@@ -115,7 +115,7 @@
             document.getElementById('clock').innerText = formattedTime;
             
             // 保留 7 位小數讓 0.25 秒的動態跳動更明顯
-            document.getElementById('percentage').innerText = percentage.toFixed(15) + '%';
+            document.getElementById('percentage').innerText = percentage.toFixed(9) + '%';
             
             // 更新進度條長度
             document.getElementById('progress-fill').style.width = percentage + '%';
